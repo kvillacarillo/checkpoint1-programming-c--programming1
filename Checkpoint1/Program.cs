@@ -51,12 +51,23 @@ namespace Checkpoint1
             string input;
             try
             {
-                Console.WriteLine("Enter the " + inputName + typeof(T).Name);
+                Console.WriteLine("Enter the " + inputName + $" [TYPE] <{typeof(T).Name}>");
                 input = Console.ReadLine() ?? "";
 
                 if (string.IsNullOrEmpty(input))
                 {
-                    throw new Exception();
+                    throw new Exception("Blank values are not allowed!");
+                }
+
+                if (typeof(T) != typeof(T))
+                {
+                    throw new Exception("Datatype Error!");
+                }
+
+
+                if (typeof(T) == typeof(string) && input.Any(char.IsDigit))
+                {
+                    throw new Exception("String cannot contain numbers!");
                 }
 
                 value = (T)Convert.ChangeType(input, typeof(T));
